@@ -5,17 +5,40 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище QAModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Scrap_Code">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Scrap_Culprit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Scrap_Data">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdLazer" Type="int" Nullable="false" />
-          <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="PathPhoto" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="IdDescription" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scrap_DefectCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Scrap_Description">
           <Key>
@@ -24,10 +47,70 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PathDocument" Type="nvarchar" MaxLength="500" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IdLazer" Type="int" Nullable="false" />
+          <Property Name="NameDoc" Type="nvarchar" MaxLength="500" StoreGeneratedPattern="Computed" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Scrap_Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdLazer" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+          <Property Name="IdPathPhoto" Type="int" />
+          <Property Name="PathDocument" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="2" />
+          <Property Name="DefectCode" Type="nvarchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="Scrap_LogPhoto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdLazer" Type="int" Nullable="false" />
+          <Property Name="PathPhoto" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IdLog" Type="int" />
+        </EntityType>
+        <EntityType Name="Scrap_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Idlazer" Type="int" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="Scrap_StatusList">
+          <Key>
+            <PropertyRef Name="int" />
+          </Key>
+          <Property Name="int" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Wave_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFID" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityContainer Name="Хранилище QAModelContainer">
+          <EntitySet Name="Scrap_Code" EntityType="Self.Scrap_Code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_Culprit" EntityType="Self.Scrap_Culprit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Scrap_Data" EntityType="Self.Scrap_Data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_DefectCode" EntityType="Self.Scrap_DefectCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Scrap_Description" EntityType="Self.Scrap_Description" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_Log" EntityType="Self.Scrap_Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_LogPhoto" EntityType="Self.Scrap_LogPhoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_Status" EntityType="Self.Scrap_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap_StatusList" EntityType="Self.Scrap_StatusList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wave_Users" EntityType="Self.Wave_Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,10 +123,21 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PathDocument" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdLazer" Type="Int32" Nullable="false" />
+          <Property Name="NameDoc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityContainer Name="QAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Scrap_Description" EntityType="Self.Scrap_Description" />
           <EntitySet Name="Scrap_Data" EntityType="QAModel.Scrap_Data" />
+          <EntitySet Name="Scrap_Log" EntityType="QAModel.Scrap_Log" />
+          <EntitySet Name="Scrap_LogPhoto" EntityType="QAModel.Scrap_LogPhoto" />
+          <EntitySet Name="Wave_Users" EntityType="QAModel.Wave_Users" />
+          <EntitySet Name="Scrap_Code" EntityType="QAModel.Scrap_Code" />
+          <EntitySet Name="Scrap_StatusList" EntityType="QAModel.Scrap_StatusList" />
+          <EntitySet Name="Scrap_Status" EntityType="QAModel.Scrap_Status" />
+          <EntitySet Name="Scrap_Culprit" EntityType="QAModel.Scrap_Culprit" />
+          <EntitySet Name="Scrap_DefectCode" EntityType="QAModel.Scrap_DefectCode" />
         </EntityContainer>
         <EntityType Name="Scrap_Data">
           <Key>
@@ -51,11 +145,83 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdLazer" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="PathPhoto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdDescription" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scrap_Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdLazer" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="PathDocument" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdPathPhoto" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="DefectCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Scrap_LogPhoto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdLazer" Type="Int32" Nullable="false" />
+          <Property Name="PathPhoto" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="IdLog" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Wave_Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Scrap_Code">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Scrap_StatusList">
+          <Key>
+            <PropertyRef Name="int" />
+          </Key>
+          <Property Name="int" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Scrap_Status">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Idlazer" Type="Int32" />
+          <Property Name="Status" Type="Int16" />
+        </EntityType>
+        <EntityType Name="Scrap_Culprit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Scrap_DefectCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -66,6 +232,9 @@
           <EntitySetMapping Name="Scrap_Description">
             <EntityTypeMapping TypeName="QAModel.Scrap_Description">
               <MappingFragment StoreEntitySet="Scrap_Description">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="NameDoc" ColumnName="NameDoc" />
+                <ScalarProperty Name="IdLazer" ColumnName="IdLazer" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="PathDocument" ColumnName="PathDocument" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -79,9 +248,89 @@
                 <ScalarProperty Name="IdDescription" ColumnName="IdDescription" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="PathPhoto" ColumnName="PathPhoto" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IdLazer" ColumnName="IdLazer" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_Log">
+            <EntityTypeMapping TypeName="QAModel.Scrap_Log">
+              <MappingFragment StoreEntitySet="Scrap_Log">
+                <ScalarProperty Name="DefectCode" ColumnName="DefectCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="IdPathPhoto" ColumnName="IdPathPhoto" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PathDocument" ColumnName="PathDocument" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdLazer" ColumnName="IdLazer" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_LogPhoto">
+            <EntityTypeMapping TypeName="QAModel.Scrap_LogPhoto">
+              <MappingFragment StoreEntitySet="Scrap_LogPhoto">
+                <ScalarProperty Name="IdLog" ColumnName="IdLog" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PathPhoto" ColumnName="PathPhoto" />
+                <ScalarProperty Name="IdLazer" ColumnName="IdLazer" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wave_Users">
+            <EntityTypeMapping TypeName="QAModel.Wave_Users">
+              <MappingFragment StoreEntitySet="Wave_Users">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="RFID" ColumnName="RFID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_Code">
+            <EntityTypeMapping TypeName="QAModel.Scrap_Code">
+              <MappingFragment StoreEntitySet="Scrap_Code">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_StatusList">
+            <EntityTypeMapping TypeName="QAModel.Scrap_StatusList">
+              <MappingFragment StoreEntitySet="Scrap_StatusList">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="int" ColumnName="int" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_Status">
+            <EntityTypeMapping TypeName="QAModel.Scrap_Status">
+              <MappingFragment StoreEntitySet="Scrap_Status">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Idlazer" ColumnName="Idlazer" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_Culprit">
+            <EntityTypeMapping TypeName="QAModel.Scrap_Culprit">
+              <MappingFragment StoreEntitySet="Scrap_Culprit">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap_DefectCode">
+            <EntityTypeMapping TypeName="QAModel.Scrap_DefectCode">
+              <MappingFragment StoreEntitySet="Scrap_DefectCode">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

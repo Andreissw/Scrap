@@ -16,7 +16,6 @@ namespace Scrap
     {
         public int ID { get; set; }
         public int IdLazer { get; set; }
-        public bool Status { get; set; }
         public string PathPhoto { get; set; }
         public System.DateTime Date { get; set; }
         public int IdDescription { get; set; }

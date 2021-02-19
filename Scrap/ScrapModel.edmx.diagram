@@ -7,6 +7,14 @@
       <Diagram DiagramId="bda22fdd7ac04253a8c724d0e881f222" Name="Diagram1">
         <EntityTypeShape EntityType="QAModel.Scrap_Description" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QAModel.Scrap_Data" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_Log" Width="1.5" PointX="0.625" PointY="3.25" />
+        <EntityTypeShape EntityType="QAModel.Scrap_LogPhoto" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="QAModel.Wave_Users" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_Code" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_StatusList" Width="1.5" PointX="5.75" PointY="6.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_Status" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_Culprit" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="QAModel.Scrap_DefectCode" Width="1.5" PointX="7.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

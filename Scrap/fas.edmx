@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище FASModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "FAS.dbo.Ct_OperLog" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Ct_OperLog">
+          <Key>
+            <PropertyRef Name="TestResultID" />
+            <PropertyRef Name="StepDate" />
+            <PropertyRef Name="LOTID" />
+          </Key>
+          <Property Name="PCBID" Type="int" />
+          <Property Name="LOTID" Type="int" Nullable="false" />
+          <Property Name="StepID" Type="smallint" />
+          <Property Name="TestResultID" Type="tinyint" Nullable="false" />
+          <Property Name="StepDate" Type="datetime" Nullable="false" />
+          <Property Name="StepByID" Type="smallint" />
+          <Property Name="LineID" Type="tinyint" />
+          <Property Name="ErrorCodeID" Type="int" />
+          <Property Name="Descriptions" Type="nvarchar" MaxLength="250" />
+          <Property Name="SNID" Type="int" />
+        </EntityType>
+        <EntityType Name="FAS_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFID" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsActiv" Type="bit" Nullable="false" />
+          <Property Name="UsersGroupID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Хранилище FASModelContainer">
+          <EntitySet Name="FAS_Users" EntityType="Self.FAS_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ct_OperLog" EntityType="Self.Ct_OperLog" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Ct_OperLog].[PCBID] AS [PCBID], 
+    [Ct_OperLog].[LOTID] AS [LOTID], 
+    [Ct_OperLog].[StepID] AS [StepID], 
+    [Ct_OperLog].[TestResultID] AS [TestResultID], 
+    [Ct_OperLog].[StepDate] AS [StepDate], 
+    [Ct_OperLog].[StepByID] AS [StepByID], 
+    [Ct_OperLog].[LineID] AS [LineID], 
+    [Ct_OperLog].[ErrorCodeID] AS [ErrorCodeID], 
+    [Ct_OperLog].[Descriptions] AS [Descriptions], 
+    [Ct_OperLog].[SNID] AS [SNID]
+    FROM [dbo].[Ct_OperLog] AS [Ct_OperLog]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FASModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ct_OperLog">
+          <Key>
+            <PropertyRef Name="LOTID" />
+            <PropertyRef Name="TestResultID" />
+            <PropertyRef Name="StepDate" />
+          </Key>
+          <Property Name="PCBID" Type="Int32" />
+          <Property Name="LOTID" Type="Int32" Nullable="false" />
+          <Property Name="StepID" Type="Int16" />
+          <Property Name="TestResultID" Type="Byte" Nullable="false" />
+          <Property Name="StepDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StepByID" Type="Int16" />
+          <Property Name="LineID" Type="Byte" />
+          <Property Name="ErrorCodeID" Type="Int32" />
+          <Property Name="Descriptions" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SNID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="FASEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ct_OperLog" EntityType="Self.Ct_OperLog" />
+          <EntitySet Name="FAS_Users" EntityType="FASModel.FAS_Users" />
+        </EntityContainer>
+        <EntityType Name="FAS_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFID" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActiv" Type="Boolean" Nullable="false" />
+          <Property Name="UsersGroupID" Type="Byte" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище FASModelContainer" CdmEntityContainer="FASEntities">
+          <EntitySetMapping Name="Ct_OperLog">
+            <EntityTypeMapping TypeName="FASModel.Ct_OperLog">
+              <MappingFragment StoreEntitySet="Ct_OperLog">
+                <ScalarProperty Name="PCBID" ColumnName="PCBID" />
+                <ScalarProperty Name="LOTID" ColumnName="LOTID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
+                <ScalarProperty Name="TestResultID" ColumnName="TestResultID" />
+                <ScalarProperty Name="StepDate" ColumnName="StepDate" />
+                <ScalarProperty Name="StepByID" ColumnName="StepByID" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="ErrorCodeID" ColumnName="ErrorCodeID" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="SNID" ColumnName="SNID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAS_Users">
+            <EntityTypeMapping TypeName="FASModel.FAS_Users">
+              <MappingFragment StoreEntitySet="FAS_Users">
+                <ScalarProperty Name="UsersGroupID" ColumnName="UsersGroupID" />
+                <ScalarProperty Name="IsActiv" ColumnName="IsActiv" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="RFID" ColumnName="RFID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

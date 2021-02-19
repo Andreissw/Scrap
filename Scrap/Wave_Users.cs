@@ -12,13 +12,10 @@ namespace Scrap
     using System;
     using System.Collections.Generic;
     
-    public partial class Scrap_Description
+    public partial class Wave_Users
     {
-        public int id { get; set; }
-        public string PathDocument { get; set; }
-        public string Description { get; set; }
-        public int IdLazer { get; set; }
-        public string NameDoc { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public int Id { get; set; }
+        public string RFID { get; set; }
+        public string UserName { get; set; }
     }
 }

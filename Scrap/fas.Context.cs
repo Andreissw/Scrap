@@ -13,10 +13,10 @@ namespace Scrap
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QAEntities : DbContext
+    public partial class FASEntities : DbContext
     {
-        public QAEntities()
-            : base("name=QAEntities")
+        public FASEntities()
+            : base("name=FASEntities")
         {
         }
     
@@ -25,15 +25,7 @@ namespace Scrap
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Scrap_Description> Scrap_Description { get; set; }
-        public virtual DbSet<Scrap_Data> Scrap_Data { get; set; }
-        public virtual DbSet<Scrap_Log> Scrap_Log { get; set; }
-        public virtual DbSet<Scrap_LogPhoto> Scrap_LogPhoto { get; set; }
-        public virtual DbSet<Wave_Users> Wave_Users { get; set; }
-        public virtual DbSet<Scrap_Code> Scrap_Code { get; set; }
-        public virtual DbSet<Scrap_StatusList> Scrap_StatusList { get; set; }
-        public virtual DbSet<Scrap_Status> Scrap_Status { get; set; }
-        public virtual DbSet<Scrap_Culprit> Scrap_Culprit { get; set; }
-        public virtual DbSet<Scrap_DefectCode> Scrap_DefectCode { get; set; }
+        public virtual DbSet<Ct_OperLog> Ct_OperLog { get; set; }
+        public virtual DbSet<FAS_Users> FAS_Users { get; set; }
     }
 }

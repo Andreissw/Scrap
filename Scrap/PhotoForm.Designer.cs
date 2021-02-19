@@ -36,6 +36,8 @@
             this.ddPhoto = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.удалитьФотографиюToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PanelNew = new System.Windows.Forms.Panel();
+            this.Panel = new System.Windows.Forms.Panel();
             this.PanelPhoto.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +67,7 @@
             this.BTOK.Name = "BTOK";
             this.BTOK.Size = new System.Drawing.Size(377, 46);
             this.BTOK.TabIndex = 8;
-            this.BTOK.Text = "Добавить в карантин";
+            this.BTOK.Text = "Далее";
             this.BTOK.UseVisualStyleBackColor = false;
             this.BTOK.Click += new System.EventHandler(this.BTOK_Click);
             // 
@@ -81,7 +83,6 @@
             this.PanelPhoto.TabIndex = 10;
             this.PanelPhoto.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanelPhoto_DragDrop);
             this.PanelPhoto.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelPhoto_DragEnter);
-            this.PanelPhoto.DragOver += new System.Windows.Forms.DragEventHandler(this.PanelPhoto_DragOver);
             this.PanelPhoto.DragLeave += new System.EventHandler(this.PanelPhoto_DragLeave);
             // 
             // RemoveButton
@@ -120,12 +121,32 @@
             this.удалитьФотографиюToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.удалитьФотографиюToolStripMenuItem.Text = "Удалить фотографию";
             // 
+            // PanelNew
+            // 
+            this.PanelNew.AutoScroll = true;
+            this.PanelNew.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.PanelNew.Location = new System.Drawing.Point(12, 444);
+            this.PanelNew.Name = "PanelNew";
+            this.PanelNew.Size = new System.Drawing.Size(776, 97);
+            this.PanelNew.TabIndex = 12;
+            // 
+            // Panel
+            // 
+            this.Panel.AutoScroll = true;
+            this.Panel.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.Panel.Location = new System.Drawing.Point(12, 547);
+            this.Panel.Name = "Panel";
+            this.Panel.Size = new System.Drawing.Size(776, 97);
+            this.Panel.TabIndex = 13;
+            // 
             // PhotoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(800, 602);
+            this.ClientSize = new System.Drawing.Size(800, 660);
+            this.Controls.Add(this.Panel);
+            this.Controls.Add(this.PanelNew);
             this.Controls.Add(this.PanelPhoto);
             this.Controls.Add(this.BTBack);
             this.Controls.Add(this.BTOK);
@@ -133,6 +154,8 @@
             this.Name = "PhotoForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PhotoForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PhotoForm_FormClosed);
+            this.Load += new System.EventHandler(this.PhotoForm_Load);
             this.PanelPhoto.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -149,5 +172,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem удалитьФотографиюToolStripMenuItem;
+        private System.Windows.Forms.Panel PanelNew;
+        private System.Windows.Forms.Panel Panel;
     }
 }

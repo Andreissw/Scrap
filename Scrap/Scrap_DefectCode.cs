@@ -12,13 +12,10 @@ namespace Scrap
     using System;
     using System.Collections.Generic;
     
-    public partial class Scrap_Description
+    public partial class Scrap_DefectCode
     {
         public int id { get; set; }
-        public string PathDocument { get; set; }
+        public string Code { get; set; }
         public string Description { get; set; }
-        public int IdLazer { get; set; }
-        public string NameDoc { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
     }
 }

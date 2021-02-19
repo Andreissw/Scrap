@@ -12,13 +12,17 @@ namespace Scrap
     using System;
     using System.Collections.Generic;
     
-    public partial class Scrap_Description
+    public partial class Ct_OperLog
     {
-        public int id { get; set; }
-        public string PathDocument { get; set; }
-        public string Description { get; set; }
-        public int IdLazer { get; set; }
-        public string NameDoc { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<int> PCBID { get; set; }
+        public int LOTID { get; set; }
+        public Nullable<short> StepID { get; set; }
+        public byte TestResultID { get; set; }
+        public System.DateTime StepDate { get; set; }
+        public Nullable<short> StepByID { get; set; }
+        public Nullable<byte> LineID { get; set; }
+        public Nullable<int> ErrorCodeID { get; set; }
+        public string Descriptions { get; set; }
+        public Nullable<int> SNID { get; set; }
     }
 }
