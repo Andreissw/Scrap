@@ -449,7 +449,7 @@ namespace Scrap
         }
 
         private void GridList_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
+        {           
             Report();
         }
     }
