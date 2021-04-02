@@ -19,6 +19,22 @@ namespace Scrap
             InitializeComponent();
             List.Items.AddRange(Objects); //Вывод списка меню
             ListMethods = new List<DelegateMethodths>() { OpenScanReject, ReportReject, RemoveScrap, CloseApp };
+            LoadGrid.Loadgrid(GridRemScrap, @"   use fas select StepDate Дата,barcode,ContractLot Лот, Ремонтник from 
+	                          (SELECT 
+                              [LOTID]   
+	                          ,(select lot.FullLOTCode from Contract_LOT lot where op.LOTID = lot.id)	 ContractLot	  
+                              ,[StepDate]  
+	                          ,(select content from SMDCOMPONETS.dbo.LazerBase l where l.IDLaser = op.PCBID) as barcode
+                              ,Descriptions 'Ремонтник'
+	                          , ROW_NUMBER() over(partition by pcbid order by stepdate desc ) as R
+							  ,op.TestResultID
+	                          FROM [FAS].[dbo].[Ct_OperLog] op
+	                          where  StepID = 4 ) T
+                             where R = 1 and t.TestResultID = 4");
+
+            if (GridRemScrap.DataSource == null) GBGridREm.Visible = false;
+            else GBGridREm.Visible = true;
+
         }
 
         readonly string[] Objects = { "Сканирование брака", "Отчёт по браку", "Удалить плату из брака", "Выход" }; //Список меню
@@ -50,28 +66,42 @@ namespace Scrap
 
                 { Error($"{TBScanScrap.Text} Decode не найден в таблице LazerBase (Лазерный гравировщик)"); TBScan.Clear(); TBScan.Select(); return; }
 
+                var TestResult = CheckLogStatus(IdLazer);
+
+                if (TestResult == 4)                
+                    goto Link;
+                
+
                 var ResultScan = CheckScrapData(IdLazer); //Проверка таблицы ScrapData, был ли номер отсканирован ранее
 
                 if (!ResultScan)
-                { Error($"{TBScanScrap.Text} Decode не найден браке"); TBScanScrap.Clear(); TBScanScrap.Select(); return; }
+                {
+                        Error($"{TBScanScrap.Text} Decode не найден браке"); TBScanScrap.Clear(); TBScanScrap.Select(); return;   
+                }
 
                 var result = CheckStatusScrap(IdLazer);
 
                 if (result == 1)
                 { Error($"{TBScanScrap.Text} Плата уже выведена из брака"); TBScanScrap.Clear(); TBScanScrap.Select(); return; }
 
-                var confim = new ConfimUser(); //Подтверждение пользователя
+
+
+          Link: var confim = new ConfimUser(); //Подтверждение пользователя
                 var Result = confim.ShowDialog();
 
                 if (Result == DialogResult.Cancel) //Отмена
                     return;
 
-                UpdateStatus(IdLazer);
+                if (TestResult != 4)
+                { UpdateStatus(IdLazer); addLog(IdLazer, confim.UserID); }
+                
                 addOppLog(IdLazer, confim.UserID);
-                addLog(IdLazer, confim.UserID);
 
-                FormInfo info = new FormInfo(IdLazer);
-                info.ShowDialog();
+                if (TestResult != 4) 
+                { 
+                    FormInfo info = new FormInfo(IdLazer);
+                    info.ShowDialog();
+                }
 
                 TBScanScrap.Clear(); TBScanScrap.Select();
             }
@@ -97,7 +127,8 @@ namespace Scrap
             //}
             #endregion
             LoadGrid.SelectString($@" use fas insert into  [FAS].[dbo].[Ct_OperLog] (PCBID,StepID,TestResultID,StepDate,StepByID) values
-                                  ('{pcbid}','{31}','{2}',CURRENT_TIMESTAMP,'{userid}')");
+                                  ('{pcbid}',31,2,CURRENT_TIMESTAMP,'{userid}') update [FAS].[dbo].[Ct_StepResult]  set StepID = 31, TestResult = 2  where PCBID = '{pcbid}'");
+          
         }
 
         private void TBScan_KeyDown(object sender, KeyEventArgs e) //Сканирование БарКода
@@ -263,8 +294,7 @@ namespace Scrap
             LoadGrid.Loadgrid(GridList, @"use qa 
                               select distinct(d.namedoc) Акт,''
                               from Scrap_Description d
-                              left join SMDCOMPONETS.dbo.LazerBase l on d.IdLazer = l.IDLaser
-                              --group by d.namedoc, ProductName, format(date,'dd.MM.yyyy HH:mm')
+                              left join SMDCOMPONETS.dbo.LazerBase l on d.IdLazer = l.IDLaser                              
                               order by Акт desc ");
 
             var grid = new DataGridView() { Visible = false };
@@ -275,14 +305,14 @@ namespace Scrap
                               from Scrap_Description d
                               left join SMDCOMPONETS.dbo.LazerBase l on d.IdLazer = l.IDLaser
                               group by d.namedoc, ProductName, format(date,'dd.MM.yyyy HH:mm')
-                              order by Акт, Дата desc ");
+                              order by  Дата desc ");
 
             for (int i = 0; i < GridList.RowCount; i++)
                 for (int k = 0; k < grid.RowCount; k++)
                     if (GridList[0, i].Value.ToString() == grid[0, k].Value.ToString())
                     { GridList[1, i].Value = grid[2, k].Value; break; }
-
-            GridList.Sort(GridList.Columns[1], ListSortDirection.Descending);
+     
+            //GridList.Sort(GridList.Columns[1]., ListSortDirection.Descending);
             GridList.Columns[1].HeaderText = "Дата";
 
             Controls.Remove(grid);
@@ -339,16 +369,21 @@ namespace Scrap
             }
         }
 
+        int  CheckLogStatus(int idLazer)
+        {
+            using (var fas = new FASEntities())
+            {
+                return fas.Ct_OperLog.Where(c => c.PCBID == idLazer).OrderByDescending(c => c.StepDate).Select(c => c.TestResultID).FirstOrDefault();
+            }
+        }
+
         void GetList(string command)
         {
             GridList.DataSource = null;
             LoadGrid.Loadgrid(GridList, command);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+     
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -395,8 +430,8 @@ namespace Scrap
         {
             using (var qa = new QAEntities())
             {
-                var q = qa.Scrap_Status.Where(c => c.Idlazer == idlazer);
-                q.FirstOrDefault().Status = 1;
+                var q = qa.Scrap_Status.Where(c => c.Idlazer == idlazer).FirstOrDefault();
+                q.Status = (short)1;
                 qa.SaveChanges();
             }
         }

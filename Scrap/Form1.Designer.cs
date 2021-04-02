@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GBScan = new System.Windows.Forms.GroupBox();
             this.ErrorLabel = new System.Windows.Forms.Label();
             this.BtAccept = new System.Windows.Forms.Button();
@@ -49,11 +50,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.TBScanScrap = new System.Windows.Forms.TextBox();
+            this.GBGridREm = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.GridRemScrap = new System.Windows.Forms.DataGridView();
             this.GBScan.SuspendLayout();
             this.GroupReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridList)).BeginInit();
             this.CMS.SuspendLayout();
             this.GBRemove.SuspendLayout();
+            this.GBGridREm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GridRemScrap)).BeginInit();
             this.SuspendLayout();
             // 
             // GBScan
@@ -65,9 +71,9 @@
             this.GBScan.Controls.Add(this.CheckBox);
             this.GBScan.Controls.Add(this.label1);
             this.GBScan.Controls.Add(this.TBScan);
-            this.GBScan.Location = new System.Drawing.Point(1551, 66);
+            this.GBScan.Location = new System.Drawing.Point(1261, 12);
             this.GBScan.Name = "GBScan";
-            this.GBScan.Size = new System.Drawing.Size(56, 26);
+            this.GBScan.Size = new System.Drawing.Size(310, 380);
             this.GBScan.TabIndex = 0;
             this.GBScan.TabStop = false;
             this.GBScan.Text = "Scan";
@@ -171,9 +177,9 @@
             this.GroupReport.Controls.Add(this.BT);
             this.GroupReport.Controls.Add(this.ReportBT);
             this.GroupReport.Controls.Add(this.GridList);
-            this.GroupReport.Location = new System.Drawing.Point(354, 13);
+            this.GroupReport.Location = new System.Drawing.Point(1348, 514);
             this.GroupReport.Name = "GroupReport";
-            this.GroupReport.Size = new System.Drawing.Size(1114, 616);
+            this.GroupReport.Size = new System.Drawing.Size(449, 155);
             this.GroupReport.TabIndex = 5;
             this.GroupReport.TabStop = false;
             this.GroupReport.Text = "Report";
@@ -249,9 +255,9 @@
             this.GBRemove.Controls.Add(this.label4);
             this.GBRemove.Controls.Add(this.label3);
             this.GBRemove.Controls.Add(this.TBScanScrap);
-            this.GBRemove.Location = new System.Drawing.Point(1541, 35);
+            this.GBRemove.Location = new System.Drawing.Point(638, 533);
             this.GBRemove.Name = "GBRemove";
-            this.GBRemove.Size = new System.Drawing.Size(74, 17);
+            this.GBRemove.Size = new System.Drawing.Size(351, 297);
             this.GBRemove.TabIndex = 6;
             this.GBRemove.TabStop = false;
             this.GBRemove.Text = "Remove";
@@ -287,11 +293,60 @@
             this.TBScanScrap.TabIndex = 0;
             this.TBScanScrap.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBScanScrap_KeyDown);
             // 
+            // GBGridREm
+            // 
+            this.GBGridREm.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.GBGridREm.Controls.Add(this.label2);
+            this.GBGridREm.Controls.Add(this.GridRemScrap);
+            this.GBGridREm.Location = new System.Drawing.Point(354, 12);
+            this.GBGridREm.Name = "GBGridREm";
+            this.GBGridREm.Size = new System.Drawing.Size(841, 487);
+            this.GBGridREm.TabIndex = 7;
+            this.GBGridREm.TabStop = false;
+            this.GBGridREm.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Coral;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(13, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(622, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Список плат, которые ждут подтверждение брака с ремонта";
+            // 
+            // GridRemScrap
+            // 
+            this.GridRemScrap.AllowUserToAddRows = false;
+            this.GridRemScrap.AllowUserToResizeColumns = false;
+            this.GridRemScrap.AllowUserToResizeRows = false;
+            this.GridRemScrap.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.GridRemScrap.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.GridRemScrap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.GridRemScrap.DefaultCellStyle = dataGridViewCellStyle2;
+            this.GridRemScrap.Location = new System.Drawing.Point(6, 44);
+            this.GridRemScrap.MultiSelect = false;
+            this.GridRemScrap.Name = "GridRemScrap";
+            this.GridRemScrap.ReadOnly = true;
+            this.GridRemScrap.RowHeadersVisible = false;
+            this.GridRemScrap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.GridRemScrap.Size = new System.Drawing.Size(829, 437);
+            this.GridRemScrap.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1564, 626);
+            this.Controls.Add(this.GBGridREm);
             this.Controls.Add(this.GBRemove);
             this.Controls.Add(this.GroupReport);
             this.Controls.Add(this.BT_OK);
@@ -299,7 +354,7 @@
             this.Controls.Add(this.GBScan);
             this.Name = "Form1";
             this.Text = "Scrap";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.GBScan.ResumeLayout(false);
             this.GBScan.PerformLayout();
             this.GroupReport.ResumeLayout(false);
@@ -307,6 +362,9 @@
             this.CMS.ResumeLayout(false);
             this.GBRemove.ResumeLayout(false);
             this.GBRemove.PerformLayout();
+            this.GBGridREm.ResumeLayout(false);
+            this.GBGridREm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GridRemScrap)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -332,6 +390,9 @@
         private System.Windows.Forms.TextBox TBScanScrap;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button BT;
+        private System.Windows.Forms.GroupBox GBGridREm;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridView GridRemScrap;
     }
 }
 

@@ -531,7 +531,7 @@ namespace Scrap
             //}
             #endregion
             LoadGrid.SelectString($@" use fas insert into  [FAS].[dbo].[Ct_OperLog] (PCBID,StepID,TestResultID,StepDate,StepByID) values
-                                  ('{pcbid}','{31}','{3}',CURRENT_TIMESTAMP,'{userid}')");
+                                  ('{pcbid}','{31}','{3}',CURRENT_TIMESTAMP,'{userid}') update [FAS].[dbo].[Ct_StepResult]  set StepID = 31, TestResult = 3  where PCBID = '{pcbid}'");
         }
 
         private void Scrap_DescriptionForm_Load(object sender, EventArgs e)
